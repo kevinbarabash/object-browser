@@ -4,48 +4,6 @@
   <meta charset="UTF-8">
   <title></title>
   <style>
-    body {
-
-    }
-
-    .label {
-      color: rgb(200,0,200);
-    }
-
-    .read-only {
-      color: rgb(220,160,220);
-    }
-
-    .number, .boolean {
-      color: rgb(0,0,255);
-    }
-
-    .string {
-      color: rgb(255,0,0);
-    }
-
-    .undefined {
-      color: #999;
-    }
-
-    .triangle {
-      position:absolute;
-      width:1.5em;
-      left:-1.5em;
-      top:0.25em;
-      text-align:center;
-      font-size:0.75em;
-      color: #666;
-      cursor: pointer;
-    }
-
-    ul {
-      margin: 0;
-      list-style-type: none;
-      font-family: 'monaco', 'lucida console', monospace;
-      font-size: 12pt;
-    }
-
     textarea {
       font-family: 'monaco', 'lucida console', monospace;
       font-size: 12pt;
@@ -58,6 +16,7 @@
       flex-direction: row;
     }
   </style>
+  <link rel="stylesheet" href="../object-browser.css"/>
   <script src="../bower_components/jquery/dist/jquery.min.js"></script>
   <script src="../bower_components/observe-js/src/observe.js"></script>
   <script src="../object-browser.js"></script>
@@ -68,7 +27,7 @@
 
 <div id="container">
   <textarea id="changes"></textarea>
-  <div id="browser"></div>
+  <div id="browser" class="object-browser"></div>
 </div>
 
 </body>

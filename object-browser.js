@@ -150,6 +150,23 @@ function genPropsList(obj, hidden) {
                     var $parent = $(this).parent();
                     $parent.children().last().remove();
                     $parent.append(genPreview(obj[key], true));
+
+                    if (typeof(obj[key]) === "object") {
+                        var $triangle = createSpan("\u25B6", "triangle");
+                        $parent.css({ position: "relative" })
+                            .prepend($triangle)
+                            .append(genPropsList(obj[key], true))
+
+                        $triangle.click(function () {
+                            var $ul = $(this).parent().find('> ul');
+                            $ul.toggle();
+                            if ($ul.is(':visible')) {
+                                $(this).text('\u25BC');
+                            } else {
+                                $(this).text('\u25B6');
+                            }
+                        });
+                    }
                 }
             });
         });

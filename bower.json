@@ -13,6 +13,7 @@
     "tests"
   ],
   "dependencies": {
-    "observe-js": "~0.5.1"
+    "observe-js": "~0.5.1",
+    "jquery": "~2.1.1"
   }
 }
