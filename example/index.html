@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    body {
+
+    }
+
+    .label {
+      color: rgb(200,0,200);
+    }
+
+    .read-only {
+      color: rgb(220,160,220);
+    }
+
+    .number, .boolean {
+      color: rgb(0,0,255);
+    }
+
+    .string {
+      color: rgb(255,0,0);
+    }
+
+    .undefined {
+      color: #999;
+    }
+
+    .triangle {
+      position:absolute;
+      width:1.5em;
+      left:-1.5em;
+      top:0.25em;
+      text-align:center;
+      font-size:0.75em;
+      color: #666;
+      cursor: pointer;
+    }
+
+    ul {
+      margin: 0;
+      list-style-type: none;
+      font-family: 'monaco', 'lucida console', monospace;
+      font-size: 12pt;
+    }
+
+    textarea {
+      font-family: 'monaco', 'lucida console', monospace;
+      font-size: 12pt;
+      width: 350px;
+      height: 200px;
+    }
+
+    #container {
+      display: flex;
+      flex-direction: row;
+    }
+  </style>
+  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="../bower_components/observe-js/src/observe.js"></script>
+  <script src="../object-browser.js"></script>
+</head>
+<body>
+
+<button id="update">Update</button>
+
+<div id="container">
+  <textarea id="changes"></textarea>
+  <div id="browser"></div>
+</div>
+
+</body>
+</html>
+<script>
+
+  var obj = {
+    x: 5,
+    y: 10,
+    z: undefined,
+    items: ["apple", "pineapple", [1,2,3]],
+    sub: {
+      p: 1,
+      q: -1
+    },
+    message: "hello, world",
+    on: false
+  };
+
+  var $container = $("#browser");
+  $container.append(genPropsList(obj));
+
+  document.querySelector("#update").addEventListener("click", function () {
+    var $textarea = $("#changes");
+    eval($textarea.val());
+    Platform.performMicrotaskCheckpoint();
+    $textarea.val("");  // clear
+  });
+
+
+</script>
