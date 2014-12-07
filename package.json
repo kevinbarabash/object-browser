@@ -1,0 +1,26 @@
+{
+  "name": "object-browser",
+  "version": "0.0.1",
+  "description": "",
+  "main": "object-browser.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kevinb7/object-browser.git"
+  },
+  "author": "Kevin Barabash <kevinb7@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevinb7/object-browser/issues"
+  },
+  "homepage": "https://github.com/kevinb7/object-browser",
+  "devDependencies": {
+    "JSONPath": "^0.10.0",
+    "jquery": "^2.1.1"
+  }
+}

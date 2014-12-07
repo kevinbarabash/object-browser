@@ -16,10 +16,9 @@
       flex-direction: row;
     }
   </style>
-  <link rel="stylesheet" href="../object-browser.css"/>
-  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="../bower_components/observe-js/src/observe.js"></script>
-  <script src="../object-browser.js"></script>
+  <link rel="stylesheet" href="../src/object-browser.css"/>
+  <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="../src/object-browser.js"></script>
 </head>
 <body>
 
@@ -34,6 +33,11 @@
 </html>
 <script>
 
+  var a = {};
+  var b = {};
+  a.b = b;
+  b.a = a;
+
   var obj = {
     x: 5,
     y: 10,
@@ -44,7 +48,8 @@
       q: -1
     },
     message: "hello, world",
-    on: false
+    on: false,
+    a: a
   };
 
   var $container = $("#browser");
