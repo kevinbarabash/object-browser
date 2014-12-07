@@ -1,3 +1,5 @@
+/// <reference path="../typings/jquery/jquery.d.ts"/>
+
 function createSpan(text, cls) {
     return $("<span class='" + cls + "'>" + text + "</span>");
 }
@@ -10,7 +12,7 @@ function createString(text) {
     return createSpan('"' + text + '"', "string");
 }
 
-function genPreview(value, stop) {
+function genPreview(value: any, stop?: boolean): any {
     if (typeof(value) === "object") {
         var text = "";
         if (value instanceof Array) {
@@ -45,41 +47,52 @@ function genPreview(value, stop) {
     }
 }
 
-function genPropsList(obj, hidden) {
-    var $root = $("<ul></ul>").addClass("props");
+var paths = {};
 
-    if (hidden) {
-        $root.hide();
-    } else {
-    }
+function genPropsList(obj: any, parentName?: string) {
+    var $root = $("<ul></ul>").addClass("props");
 
     var keys = Object.keys(obj);
     for (var i = 0; i < keys.length; i++) {
         var key = keys[i];
 
         if (typeof(obj[key]) === "object") {
-            var $triangle = createSpan("\u25B6", "triangle");
-            $root.append(
-                $("<li></li>")
-                    .css({ position: "relative" })
-                    .text(": ")
-                    .prepend($triangle, createLabel(key))
-                    .append(genPreview(obj[key], true))
-            );
-            (function (val) {
+            var path = parentName ? parentName + ":" + key : key;
+            var $triangle;
+            if (paths[path]) {
+                $triangle = createSpan("\u25BC", "triangle");
+            } else {
+                $triangle = createSpan("\u25B6", "triangle");
+            }
+            var $li = $("<li></li>")
+                .css({ position: "relative" })
+                .text(": ")
+                .prepend($triangle, createLabel(key))
+                .append(genPreview(obj[key], true));
+            if (paths[path]) {
+                $li.append(genPropsList(obj[key], path));
+            }
+            $root.append($li);
+            (function (key, val) {
                 $triangle.click(function () {
-                    if ($(this).parent().find('> ul').length === 0) {
-                        $(this).parent().append(genPropsList(val, true));
+                    var path = parentName ? parentName + ":" + key : key;
+                    var $ul;
+                    if ($(this).parent().find('> ul').length !== 0) {
+                        $ul = $(this).parent().find('> ul');
+                        $ul.toggle();
+                    } else {
+                        $ul = genPropsList(val, path);
+                        $(this).parent().append($ul);
                     }
-                    var $ul = $(this).parent().find('> ul');
-                    $ul.toggle();
                     if ($ul.is(':visible')) {
+                        paths[path] = true;
                         $(this).text('\u25BC');
                     } else {
+                        paths[path] = false;
                         $(this).text('\u25B6');
                     }
                 });
-            })(obj[key]);
+            })(key, obj[key]);
         } else {
             $root.append(
                 $("<li></li>")
@@ -100,3 +113,23 @@ function genPropsList(obj, hidden) {
 
     return $root;
 }
+
+class ObjectBrowser {
+    $container: JQuery;
+
+    constructor(public container: HTMLDivElement) {
+        this.$container = $(container);
+    }
+
+    set object(obj) {
+        this.$container.empty();
+        this.$container.append(genPropsList(obj));
+    }
+
+    getOpenPaths() {
+        return Object.keys(paths).filter(function (path) {
+            return paths[path];
+        });
+    }
+}
+

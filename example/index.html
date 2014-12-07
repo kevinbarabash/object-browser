@@ -16,16 +16,15 @@
       flex-direction: row;
     }
   </style>
-  <link rel="stylesheet" href="../src/object-browser.css"/>
+  <link rel="stylesheet" href="../dist/object-browser.css"/>
   <script src="../node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="../src/object-browser.js"></script>
+  <script src="../dist/object-browser.js"></script>
 </head>
 <body>
 
 <button id="update">Update</button>
 
 <div id="container">
-  <textarea id="changes"></textarea>
   <div id="browser" class="object-browser"></div>
 </div>
 
@@ -53,14 +52,12 @@
   };
 
   var $container = $("#browser");
-  $container.append(genPropsList(obj));
+  var browser = new ObjectBrowser(document.getElementById("browser"));
+
+  browser.object = obj;
 
   document.querySelector("#update").addEventListener("click", function () {
-    var $textarea = $("#changes");
-    eval($textarea.val());
-    Platform.performMicrotaskCheckpoint();
-    $textarea.val("");  // clear
+    browser.object = obj;
   });
-
 
 </script>
