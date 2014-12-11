@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kevinb7/object-browser.svg)](https://travis-ci.org/kevinb7/object-browser)
+
 # object-browser #
 
 HTML widget for browser arbitrary JavaScript objects.  Very similar to the one
